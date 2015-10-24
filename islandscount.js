@@ -1,27 +1,16 @@
-//This function passes all Makersquare tests.
-function m(m) {
-  for ( i = 0, s = 0, p = m.indexOf('\n'); i < m.length; i++ ) {
-    s += m[i] == '0' &&
-      m[i-1] != '0' &&
-      m[i-p-1] != '0' &&
-      (m[i+1] != '0' || m[i-p] != '0')
-  }
-
-  return s;
-}
-
-//This is the proper function that will pass all test cases
-function countIslands (m) {
-  var r = function(idx,start) {
-    if (m[idx] === '0') {
-      m[idx] = (s += start);
-
-      r(idx-1,0), r(idx+p+1,0), r(idx+1,0), r(idx-p-1,0)
+function countIslands (map,row) {
+  function search(idx,flag) {
+    if (map[idx] === '0') {
+      map[idx] = (s += flag|0);
+      search(idx-1); //Recurse left
+      search(idx+row); //Recurse 1 row below
+      search(idx+1); //Recurse right
+      search(idx-row); //Recurse 1 row above
     }
   }
 
-  for ( var i = 0, s = 0, p = m.indexOf('\n'), m = m.split(''); i < m.length; i++ ) {
-    r(i,1);
+  for ( var i = 0, s = 0; i < map.length; i++ ) {
+    search(i,1);
   }
 
   return s;
